@@ -1,38 +1,38 @@
-import React, { useState } from "react";
 import {
   Box,
-  Drawer,
+  Button,
+  Collapse,
   Sider as DefaultSider,
+  Drawer,
+  IconButton,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Collapse,
-  Tooltip,
-  Button,
-  IconButton,
   MuiList,
+  Tooltip,
 } from "@pankod/refine-mui";
-import {
-  ListOutlined,
-  Logout,
-  ExpandLess,
-  ExpandMore,
-  ChevronLeft,
-  ChevronRight,
-  MenuRounded,
-  Dashboard,
-} from "@mui/icons-material";
 import {
   CanAccess,
   ITreeMenu,
   useIsExistAuthentication,
   useLogout,
-  useTitle,
-  useTranslate,
-  useRouterContext,
   useMenu,
   useRefineContext,
+  useRouterContext,
+  useTitle,
+  useTranslate,
 } from "@pankod/refine-core";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Dashboard,
+  ExpandLess,
+  ExpandMore,
+  ListOutlined,
+  Logout,
+  MenuRounded,
+} from "@mui/icons-material";
+import React, { useState } from "react";
 
 import { Title as DefaultTitle } from "../title";
 
@@ -90,15 +90,13 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             action="list"
             params={{
               resource: item,
-            }}
-          >
+            }}>
             <div key={route}>
               <Tooltip
                 title={label ?? name}
                 placement="right"
                 disableHoverListener={!collapsed}
-                arrow
-              >
+                arrow>
                 <ListItemButton
                   onClick={() => {
                     if (collapsed) {
@@ -119,22 +117,20 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                       },
                       backgroundColor: "transparent",
                     },
-                  }}
-                >
+                  }}>
                   <ListItemIcon
                     sx={{
                       justifyContent: "center",
                       minWidth: 36,
                       color: "primary.contrastText",
-                    }}
-                  >
+                    }}>
                     {icon ?? <ListOutlined />}
                   </ListItemIcon>
                   <ListItemText
                     primary={label}
                     primaryTypographyProps={{
                       noWrap: true,
-                      fontSize: "14px",
+                      fontSize: "16px",
                       fontWeight: isSelected ? "bold" : "normal",
                     }}
                   />
@@ -158,14 +154,12 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           key={route}
           resource={name.toLowerCase()}
           action="list"
-          params={{ resource: item }}
-        >
+          params={{ resource: item }}>
           <Tooltip
             title={label ?? name}
             placement="right"
             disableHoverListener={!collapsed}
-            arrow
-          >
+            arrow>
             <ListItemButton
               component={Link}
               to={route}
@@ -178,28 +172,32 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                 py: isNested ? 1.25 : 1,
                 "&.Mui-selected": {
                   "&:hover": {
-                    backgroundColor: "transparent",
+                    backgroundColor: isSelected ? "#1e36e8" : "transparent",
                   },
-                  backgroundColor: "transparent",
+                  backgroundColor: isSelected ? "#475be8" : "transparent",
                 },
                 justifyContent: "center",
-              }}
-            >
+                margin: "10px auto",
+                borderRadius: "12px",
+                minHeight: "56px",
+                width: "90%",
+              }}>
               <ListItemIcon
                 sx={{
                   justifyContent: "center",
                   minWidth: 36,
-                  color: "primary.contrastText",
-                }}
-              >
+                  color: isSelected ? "#fff" : "#808191",
+                }}>
                 {icon ?? <ListOutlined />}
               </ListItemIcon>
               <ListItemText
                 primary={label}
                 primaryTypographyProps={{
                   noWrap: true,
-                  fontSize: "14px",
+                  fontSize: "16px",
                   fontWeight: isSelected ? "bold" : "normal",
+                  color: isSelected ? "#FFF" : "#808191",
+                  marginLeft: "10px",
                 }}
               />
             </ListItemButton>
@@ -215,8 +213,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
         title={translate("dashboard.title", "Dashboard")}
         placement="right"
         disableHoverListener={!collapsed}
-        arrow
-      >
+        arrow>
         <ListItemButton
           component={Link}
           to="/"
@@ -234,22 +231,20 @@ export const Sider: typeof DefaultSider = ({ render }) => {
               backgroundColor: "transparent",
             },
             justifyContent: "center",
-          }}
-        >
+          }}>
           <ListItemIcon
             sx={{
               justifyContent: "center",
               minWidth: 36,
               color: "primary.contrastText",
-            }}
-          >
+            }}>
             <Dashboard />
           </ListItemIcon>
           <ListItemText
             primary={translate("dashboard.title", "Dashboard")}
             primaryTypographyProps={{
               noWrap: true,
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: selectedKey === "/" ? "bold" : "normal",
             }}
           />
@@ -263,27 +258,30 @@ export const Sider: typeof DefaultSider = ({ render }) => {
       title={t("buttons.logout", "Logout")}
       placement="right"
       disableHoverListener={!collapsed}
-      arrow
-    >
+      arrow>
       <ListItemButton
         key="logout"
         onClick={() => mutateLogout()}
-        sx={{ justifyContent: "center" }}
-      >
+        sx={{
+          justifyContent: "center",
+          margin: "10px auto",
+          borderRadius: "12px",
+          minHeight: "56px",
+          width: "90%",
+        }}>
         <ListItemIcon
           sx={{
             justifyContent: "center",
             minWidth: 36,
-            color: "primary.contrastText",
-          }}
-        >
+            color: "#808191",
+          }}>
           <Logout />
         </ListItemIcon>
         <ListItemText
           primary={t("buttons.logout", "Logout")}
           primaryTypographyProps={{
             noWrap: true,
-            fontSize: "14px",
+            fontSize: "16px",
           }}
         />
       </ListItemButton>
@@ -311,7 +309,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
   };
 
   const drawer = (
-    <MuiList disablePadding sx={{ mt: 1, color: "primary.contrastText" }}>
+    <MuiList disablePadding sx={{ mt: 1, color: "#808191" }}>
       {renderSider()}
     </MuiList>
   );
@@ -335,8 +333,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           zIndex: 1101,
           width: { sm: drawerWidth() },
           display: "flex",
-        }}
-      >
+        }}>
         <Drawer
           variant="temporary"
           open={opened}
@@ -348,44 +345,40 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             display: { sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
               width: 256,
-              bgcolor: "secondary.main",
+              bgcolor: "#FCFCFC",
             },
-          }}
-        >
+          }}>
           <Box
             sx={{
               height: 64,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-            }}
-          >
+            }}>
             <RenderToTitle collapsed={false} />
           </Box>
           {drawer}
         </Drawer>
         <Drawer
           variant="permanent"
-          PaperProps={{ elevation: 1 }}
+          PaperProps={{ elevation: 0 }}
           sx={{
             display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-              bgcolor: "secondary.main",
+              bgcolor: "#FCFCFC",
               overflow: "hidden",
               transition: "width 200ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
             },
           }}
-          open
-        >
+          open>
           <Box
             sx={{
               height: 64,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-            }}
-          >
+            }}>
             <RenderToTitle collapsed={collapsed} />
           </Box>
           <Box
@@ -393,22 +386,23 @@ export const Sider: typeof DefaultSider = ({ render }) => {
               flexGrow: 1,
               overflowX: "hidden",
               overflowY: "auto",
-            }}
-          >
+            }}>
             {drawer}
           </Box>
           <Button
             sx={{
-              background: "rgba(0,0,0,.5)",
+              background: "#475BE8",
               color: "primary.contrastText",
               textAlign: "center",
               borderRadius: 0,
               borderTop: "1px solid #ffffff1a",
+              "&: hover": {
+                background: "#1e36e8",
+              },
             }}
             fullWidth
             size="large"
-            onClick={() => setCollapsed((prev) => !prev)}
-          >
+            onClick={() => setCollapsed((prev) => !prev)}>
             {collapsed ? <ChevronRight /> : <ChevronLeft />}
           </Button>
         </Drawer>
@@ -419,15 +413,13 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             top: "64px",
             left: "0px",
             borderRadius: "0 6px 6px 0",
-            bgcolor: "secondary.main",
+            bgcolor: "#475be8",
             zIndex: 1199,
             width: "36px",
-          }}
-        >
+          }}>
           <IconButton
             sx={{ color: "#fff", width: "36px" }}
-            onClick={() => setOpened((prev) => !prev)}
-          >
+            onClick={() => setOpened((prev) => !prev)}>
             <MenuRounded />
           </IconButton>
         </Box>
